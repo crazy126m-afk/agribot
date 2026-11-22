@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="kn" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AgriBot Pro - Davangere Smart Agriculture Suite | ಅಗ್ರಿಬಾಟ್</title>
+    
+    <!-- PWA & Mobile Meta Tags -->
+    <meta name="theme-color" content="#060907">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AgriBot">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+    
+    <!-- Google Fonts: Space Grotesk + Poppins + Noto Sans Kannada -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'Poppins', 'Noto Sans Kannada', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        cyber: {
+                            base: '#060a08',
+                            surface: '#0d1310',
+                            card: '#121b16',
+                            border: '#1b2c23',
+                            neon: '#00f59b',
+                            lime: '#a3e635',
+                            gold: '#fbbf24',
+                            cyan: '#38bdf8',
+                            rose: '#fb7185',
+                            accent: '#10b981'
+                        }
+                    },
+                    boxShadow: {
+                        'neon-glow': '0 0 25px -5px rgba(0, 245, 155, 0.35)',
+                        'gold-glow': '0 0 25px -5px rgba(251, 191, 36, 0.35)',
+                        'cyber-card': '0 12px 30px -10px rgba(0, 0, 0, 0.6)',
+                        'dock': '0 15px 40px -10px rgba(0, 245, 155, 0.25)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            box-sizing: border-box;
+        }
+        input, select, textarea {
+            user-select: text;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom, 24px);
+        }
+        @keyframes scanLaserGenZ {
+            0% { top: 0%; opacity: 0.8; box-shadow: 0 0 15px #00f59b; }
+            50% { top: 92%; opacity: 1; box-shadow: 0 0 25px #00f59b; }
+            100% { top: 0%; opacity: 0.8; box-shadow: 0 0 15px #00f59b; }
+        }
+        .animate-scan-laser-genz {
+            animation: scanLaserGenZ 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        .mesh-gradient-bg {
+            background: radial-gradient(circle at 10% 20%, rgba(0, 245, 155, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(251, 191, 36, 0.06) 0%, transparent 40%),
+                        radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+                        #060a08;
+        }
+    </style>
+</head>
+<body class="mesh-gradient-bg text-slate-100 antialiased font-sans flex flex-col min-h-screen max-w-md mx-auto relative border-x border-cyber-border shadow-2xl selection:bg-cyber-neon selection:text-black">
+
+    <!-- Ambient Subtle Top Light Aura -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-cyber-neon/10 blur-3xl pointer-events-none rounded-full"></div>
+
+    <!-- ================= GEN-Z TOP BAR & HEADER ================= -->
+    <header class="bg-cyber-surface/75 backdrop-blur-2xl border-b border-cyber-border/80 sticky top-0 z-40 px-4 pt-3 pb-3 transition-all duration-300">
+        <div class="flex items-center justify-between">
+            
+            <!-- Brand & Badges -->
+            <div class="flex items-center space-x-3">
+                <div class="relative group cursor-pointer" onclick="playBeep(800, 0.1)">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyber-card via-cyber-surface to-cyber-border p-0.5 border border-cyber-neon/40 shadow-neon-glow flex items-center justify-center transition group-hover:scale-105">
+                        <span class="text-2xl drop-shadow-[0_0_12px_#00f59b]">🌱</span>
+                    </div>
+                    <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-cyber-neon rounded-full border-2 border-cyber-base flex items-center justify-center animate-pulse"></span>
+                </div>
+
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xl font-black tracking-tight bg-gradient-to-r from-white via-slate-100 to-cyber-neon bg-clip-text text-transparent font-display">
+                            AgriBot
+                        </span>
+                        <span class="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-gradient-to-r from-cyber-neon to-cyber-lime text-slate-950 shadow-neon-glow">
+                            DVG · AGRIBOT AI
+                        </span>
+                    </div>
+                    <p id="app-tagline" class="text-[11px] font-medium text-slate-400 flex items-center space-x-1">
+                        <span>ಅಗ್ರಿಬಾಟ್ · ದಾವಣಗೆರೆ ಸ್ಮಾರ್ಟ್ ರೈತ ಮಿತ್ರ</span>
+                        <span class="text-cyber-neon text-[10px]">• Online</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Action Pill (Audio + Language) -->
+            <div class="flex items-center space-x-1.5 bg-cyber-card/90 backdrop-blur-xl border border-cyber-border p-1 rounded-2xl shadow-cyber-card">
+                <!-- TTS Voice -->
+                <button id="tts-btn" onclick="toggleSpeech()" title="AI Voice Advisory" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-cyber-neon/20 hover:text-cyber-neon text-slate-300 transition active:scale-90 flex items-center justify-center border border-white/5">
+                    <i id="tts-icon" data-lucide="volume-2" class="w-4 h-4"></i>
+                </button>
+
+                <!-- Language Selector -->
+                <button onclick="openLanguageModal()" class="px-2.5 py-1 rounded-xl bg-gradient-to-r from-cyber-neon/20 to-cyber-accent/20 hover:from-cyber-neon/30 hover:to-cyber-accent/30 text-cyber-neon text-xs font-bold border border-cyber-neon/30 transition flex items-center space-x-1 active:scale-95">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <span id="lang-indicator">ಕನ್ನಡ</span>
+                    <i data-lucide="chevron-down" class="w-3 h-3 opacity-70"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Live Cyber Ticker Pill -->
+        <div class="mt-2.5 bg-gradient-to-r from-cyber-surface via-cyber-card to-cyber-surface rounded-2xl px-3 py-2 flex items-center justify-between text-xs border border-cyber-border text-slate-300 shadow-inner">
+            <div class="flex items-center space-x-2 truncate">
+                <span class="w-2 h-2 rounded-full bg-cyber-neon shadow-[0_0_8px_#00f59b] animate-ping"></span>
+                <span id="advisory-ticker" class="truncate font-semibold text-[11px] text-slate-200">
+                    ದಾವಣಗೆರೆ ಹವಾಮಾನ: ವಾತಾವರಣ ಸ್ಪಷ್ಟವಾಗಿದೆ, ನೀರಾವರಿ ಮಾಡಬಹುದು.
+                </span>
+            </div>
+            <span class="text-[9px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-lg bg-cyber-neon/15 text-cyber-neon border border-cyber-neon/30 ml-1.5 flex-shrink-0">
+                DVG LIVE
+            </span>
+        </div>
+    </header>
+
+    <!-- ================= GEN-Z LANGUAGE MODAL ================= -->
+    <div id="language-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 backdrop-blur-md transition-opacity">
+        <div class="bg-cyber-surface w-full max-w-sm rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl border border-cyber-border space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-cyber-border">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-cyber-neon/20 flex items-center justify-center text-cyber-neon">
+                        <i data-lucide="languages" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-sm">Select Your Language</h3>
+                        <p class="text-[10px] text-slate-400">ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ / भाषा चुनें</p>
+                    </div>
+                </div>
+                <button onclick="closeLanguageModal()" class="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Options -->
+            <div class="space-y-2.5">
+                <!-- Kannada -->
+                <button onclick="setLanguage('kn')" class="w-full p-3.5 rounded-2xl border border-cyber-border hover:border-cyber-neon/60 bg-cyber-card flex items-center justify-between transition text-left active:scale-98 group">
+                    <div class="flex items-center space-x-3.5">
+                        <span class="text-2xl">🟡🔴</span>
+                        <div>
+                            <span class="font-black text-white text-sm block">ಕನ್ನಡ (Kannada)</span>
+                            <span class="text-[11px] text-slate-400">ದಾವಣಗೆರೆ & ಕರ್ನಾಟಕ ರೈತ ಆವೃತ್ತಿ</span>
+                        </div>
+                    </div>
+                    <span id="check-kn" class="w-6 h-6 rounded-full bg-cyber-neon text-slate-950 flex items-center justify-center text-xs font-black shadow-neon-glow">✓</span>
+                </button>
+
+                <!-- Hindi -->
+                <button onclick="setLanguage('hi')" class="w-full p-3.5 rounded-2xl border border-cyber-border hover:border-cyber-neon/60 bg-cyber-card flex items-center justify-between transition text-left active:scale-98 group">
+                    <div class="flex items-center space-x-3.5">
+                        <span class="text-2xl">🇮🇳</span>
+                        <div>
+                            <span class="font-black text-white text-sm block">हिंदी (Hindi)</span>
+                            <span class="text-[11px] text-slate-400">दावणगेरे किसान व आधुनिक फसल सलाह</span>
+                        </div>
+                    </div>
+                    <span id="check-hi" class="w-6 h-6 rounded-full bg-cyber-neon text-slate-950 hidden flex items-center justify-center text-xs font-black shadow-neon-glow">✓</span>
+                </button>
+
+                <!-- English -->
+                <button onclick="setLanguage('en')" class="w-full p-3.5 rounded-2xl border border-cyber-border hover:border-cyber-neon/60 bg-cyber-card flex items-center justify-between transition text-left active:scale-98 group">
+                    <div class="flex items-center space-x-3.5">
+                        <span class="text-2xl">🇬🇧</span>
+                        <div>
+                            <span class="font-black text-white text-sm block">English</span>
+                            <span class="text-[11px] text-slate-400">Davangere Smart Agriculture Suite</span>
+                        </div>
+                    </div>
+                    <span id="check-en" class="w-6 h-6 rounded-full bg-cyber-neon text-slate-950 hidden flex items-center justify-center text-xs font-black shadow-neon-glow">✓</span>
+                </button>
+            </div>
+
+            <button onclick="closeLanguageModal()" class="w-full py-3 bg-gradient-to-r from-cyber-neon to-cyber-lime hover:opacity-90 text-slate-950 rounded-2xl font-black text-xs shadow-neon-glow transition active:scale-95">
+                Apply Language / ಅನ್ವಯಿಸಿ ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= GEN-Z FARM PROFILE MODAL ================= -->
+    <div id="farm-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 backdrop-blur-md">
+        <div class="bg-cyber-surface w-full max-w-sm rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl border border-cyber-border space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-cyber-border">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-cyber-gold/20 flex items-center justify-center text-cyber-gold">
+                        <i data-lucide="user-check" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h3 id="lbl-farm-profile-title" class="font-extrabold text-white text-sm">ನನ್ನ ಜಮೀನು ಪ್ರೊಫೈಲ್</h3>
+                        <p class="text-[10px] text-slate-400">My Farm Profile Settings</p>
+                    </div>
+                </div>
+                <button onclick="closeFarmModal()" class="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1" id="lbl-farmer-name">ರೈತರ ಹೆಸರು (Farmer Name):</label>
+                    <input id="prof-name" type="text" placeholder="ಉದಾ: ಬಸವರಾಜ್" class="w-full bg-cyber-card border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1" id="lbl-farmer-taluk">ದಾವಣಗೆರೆ ತಾಲೂಕು (Taluk / Hub):</label>
+                    <select id="prof-taluk" class="w-full bg-cyber-card border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                        <option value="dvg_rural">ದಾವಣಗೆರೆ ಗ್ರಾಮೀಣ (Davangere Rural)</option>
+                        <option value="harihara">ಹರಿಹರ (Harihara - Paddy/Cotton)</option>
+                        <option value="channagiri">ಚನ್ನಗಿರಿ (Channagiri - Arecanut Gold)</option>
+                        <option value="honnali">ಹೊನ್ನಾಳಿ (Honnali - Bhadra Basin)</option>
+                        <option value="jagalur">ಜಗಳೂರು (Jagalur - Millets/Groundnut)</option>
+                        <option value="nyamati">ನ್ಯಾಮತಿ (Nyamati)</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-300 mb-1" id="lbl-farmer-area">ವಿಸ್ತೀರ್ಣ (Acres):</label>
+                        <input id="prof-acres" type="number" value="2.5" step="0.5" class="w-full bg-cyber-card border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-300 mb-1" id="lbl-farmer-water">ನೀರಿನ ಮೂಲ:</label>
+                        <select id="prof-source" class="w-full bg-cyber-card border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                            <option value="bhadra">ಭದ್ರಾ ಕಾಲುವೆ (Bhadra Canal)</option>
+                            <option value="borewell">ಕೊಳವೆಬಾವಿ (Borewell)</option>
+                            <option value="rainfed">ಮಳೆಯಾಶ್ರಿತ (Rainfed)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="saveFarmProfile()" class="w-full py-3 bg-gradient-to-r from-cyber-neon to-cyber-lime text-slate-950 font-black text-xs rounded-2xl shadow-neon-glow transition active:scale-95 mt-2">
+                ಪ್ರೊಫೈಲ್ ಉಳಿಸಿ (Save Profile) 💾
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= SCROLLABLE CONTENT BODY ================= -->
+    <main id="main-content" class="flex-1 overflow-y-auto no-scrollbar pb-28 px-4 pt-3 space-y-4">
+
+        <!-- ================= TAB 1: HOME (BENTO GRID) ================= -->
+        <section id="tab-home" class="space-y-4">
+            
+            <!-- Farmer Profile Quick Chip -->
+            <div class="bg-gradient-to-r from-cyber-card via-cyber-surface to-cyber-card rounded-2xl p-3 border border-cyber-border shadow-cyber-card flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyber-neon/20 to-cyber-lime/30 border border-cyber-neon/40 flex items-center justify-center text-lg">
+                        👨‍🌾
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-1.5">
+                            <span id="greet-farmer-name" class="font-extrabold text-white text-xs">ನಮಸ್ಕಾರ, ಬಸವರಾಜ್!</span>
+                            <span class="text-[9px] bg-cyber-neon/20 text-cyber-neon px-1.5 py-0.2 rounded font-black border border-cyber-neon/30">DVG</span>
+                        </div>
+                        <p id="greet-farm-details" class="text-[10px] text-slate-400 mt-0.5 font-medium">ದಾವಣಗೆರೆ • 2.5 ಎಕರೆ • ಭದ್ರಾ ಕಾಲುವೆ</p>
+                    </div>
+                </div>
+                <button onclick="openFarmModal()" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 text-[11px] font-bold flex items-center space-x-1 border border-white/10 active:scale-95 transition">
+                    <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5 text-cyber-neon"></i>
+                    <span id="btn-edit-farm">ಬದಲಿಸಿ</span>
+                </button>
+            </div>
+
+            <!-- Bento Card 1: Davangere Live Weather Cyber Tile -->
+            <div class="relative overflow-hidden bg-gradient-to-br from-cyber-card via-cyber-surface to-cyber-base rounded-3xl p-5 border border-cyber-neon/30 shadow-neon-glow">
+                <!-- Background decorative glow -->
+                <div class="absolute -right-8 -top-8 w-36 h-36 bg-amber-400/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div class="flex items-center space-x-1.5 text-xs text-cyber-neon font-bold tracking-wide">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-cyber-neon"></i>
+                            <span id="home-loc">ದಾವಣಗೆರೆ, ಕರ್ನಾಟಕ (Davangere, KA)</span>
+                        </div>
+                        <div class="flex items-baseline space-x-3 mt-1.5">
+                            <span class="text-4xl font-black text-white tracking-tighter font-display">31°C</span>
+                            <span id="weather-status" class="text-[11px] font-extrabold text-amber-300 bg-amber-400/15 px-2.5 py-1 rounded-full border border-amber-400/30 flex items-center space-x-1">
+                                <span>☀️</span>
+                                <span>ಬಿಸಿಲು / Clear Sunny</span>
+                            </span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-1">ಭದ್ರಾ ಕಮಾಂಡ್ ಏರಿಯಾ • ಗರಿಷ್ಠ: 33°C • ಕನಿಷ್ಠ: 21°C</p>
+                    </div>
+                    
+                    <div class="text-right">
+                        <div class="w-14 h-14 bg-gradient-to-tr from-amber-500/20 to-amber-400/10 border border-amber-400/30 rounded-2xl flex items-center justify-center text-amber-400 shadow-gold-glow">
+                            <i data-lucide="sun" class="w-8 h-8"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather metrics chips -->
+                <div class="grid grid-cols-3 gap-2 mt-4 pt-3.5 border-t border-cyber-border text-center">
+                    <div class="bg-black/30 p-2.5 rounded-2xl border border-white/5">
+                        <span id="lbl-humidity" class="text-[10px] text-slate-400 block font-semibold">ತೇವಾಂಶ (Humidity)</span>
+                        <span class="text-xs font-black text-white mt-0.5 block">48%</span>
+                    </div>
+                    <div class="bg-black/30 p-2.5 rounded-2xl border border-white/5">
+                        <span id="lbl-wind" class="text-[10px] text-slate-400 block font-semibold">ಗಾಳಿ (Wind)</span>
+                        <span class="text-xs font-black text-white mt-0.5 block">14 km/h</span>
+                    </div>
+                    <div class="bg-black/30 p-2.5 rounded-2xl border border-white/5">
+                        <span id="lbl-rain" class="text-[10px] text-slate-400 block font-semibold">ಮಳೆ (Rain)</span>
+                        <span class="text-xs font-black text-cyber-neon mt-0.5 block">5% (ಶುಷ್ಕ)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bento 2x2 Services Grid (Gen-Z Style) -->
+            <div>
+                <div class="flex items-center justify-between mb-2.5 px-1">
+                    <h3 id="lbl-quick-services" class="text-xs font-black text-slate-400 uppercase tracking-widest font-display">
+                        ದಾವಣಗೆರೆ ಪ್ರಮುಖ ಸೇವೆಗಳು (Services)
+                    </h3>
+                    <span class="text-[10px] font-bold text-cyber-neon bg-cyber-neon/15 px-2 py-0.5 rounded-full border border-cyber-neon/30">
+                        100% Free
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Crop Advisor -->
+                    <button onclick="switchTab('crops')" class="relative overflow-hidden bg-gradient-to-br from-cyber-card to-cyber-surface p-4 rounded-3xl border border-cyber-neon/30 shadow-cyber-card hover:border-cyber-neon transition-all duration-300 text-left flex flex-col justify-between active:scale-95 group">
+                        <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-cyber-neon/5 rounded-full blur-xl group-hover:bg-cyber-neon/15 transition"></div>
+                        <div class="w-11 h-11 rounded-2xl bg-cyber-neon/15 text-cyber-neon flex items-center justify-center mb-3 border border-cyber-neon/30 group-hover:scale-110 transition shadow-neon-glow">
+                            <i data-lucide="wheat" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-[9px] font-extrabold uppercase tracking-wider text-cyber-neon block">AI Match</span>
+                            <h4 id="btn-crop-select-title" class="font-black text-white text-sm mt-0.5">ಬೆಳೆ ಆಯ್ಕೆ</h4>
+                            <p id="btn-crop-select-desc" class="text-[10px] text-slate-400 mt-0.5 leading-tight">ಮೆಕ್ಕೆಜೋಳ, ಅಡಿಕೆ, ಭತ್ತ</p>
+                        </div>
+                    </button>
+
+                    <!-- Plant Doctor / Pest -->
+                    <button onclick="switchTab('doctor')" class="relative overflow-hidden bg-gradient-to-br from-cyber-card to-cyber-surface p-4 rounded-3xl border border-cyber-rose/30 shadow-cyber-card hover:border-cyber-rose transition-all duration-300 text-left flex flex-col justify-between active:scale-95 group">
+                        <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-cyber-rose/5 rounded-full blur-xl group-hover:bg-cyber-rose/15 transition"></div>
+                        <div class="w-11 h-11 rounded-2xl bg-cyber-rose/15 text-cyber-rose flex items-center justify-center mb-3 border border-cyber-rose/30 group-hover:scale-110 transition">
+                            <i data-lucide="scan-line" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-[9px] font-extrabold uppercase tracking-wider text-cyber-rose block">Camera Doctor</span>
+                            <h4 id="btn-doctor-title" class="font-black text-white text-sm mt-0.5">ಸಸ್ಯ ವೈದ್ಯ</h4>
+                            <p id="btn-doctor-desc" class="text-[10px] text-slate-400 mt-0.5 leading-tight">ಅಡಿಕೆ ಕೊಳೆ & ಲದ್ದಿ ಹುಳು</p>
+                        </div>
+                    </button>
+
+                    <!-- Smart Irrigation & NPK -->
+                    <button onclick="switchTab('irrigation')" class="relative overflow-hidden bg-gradient-to-br from-cyber-card to-cyber-surface p-4 rounded-3xl border border-cyber-cyan/30 shadow-cyber-card hover:border-cyber-cyan transition-all duration-300 text-left flex flex-col justify-between active:scale-95 group">
+                        <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-cyber-cyan/5 rounded-full blur-xl group-hover:bg-cyber-cyan/15 transition"></div>
+                        <div class="w-11 h-11 rounded-2xl bg-cyber-cyan/15 text-cyber-cyan flex items-center justify-center mb-3 border border-cyber-cyan/30 group-hover:scale-110 transition">
+                            <i data-lucide="droplets" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-[9px] font-extrabold uppercase tracking-wider text-cyber-cyan block">Bhadra Water</span>
+                            <h4 id="btn-irrig-title" class="font-black text-white text-sm mt-0.5">ನೀರಾವರಿ & NPK</h4>
+                            <p id="btn-irrig-desc" class="text-[10px] text-slate-400 mt-0.5 leading-tight">ಯೂರಿಯಾ & ಕಾಲುವೆ ಲೆಕ್ಕ</p>
+                        </div>
+                    </button>
+
+                    <!-- Mandi Bhav -->
+                    <button onclick="switchTab('mandi')" class="relative overflow-hidden bg-gradient-to-br from-cyber-card to-cyber-surface p-4 rounded-3xl border border-cyber-gold/30 shadow-cyber-card hover:border-cyber-gold transition-all duration-300 text-left flex flex-col justify-between active:scale-95 group">
+                        <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-cyber-gold/15 text-cyber-gold flex items-center justify-center mb-3 border border-cyber-gold/30 group-hover:scale-110 transition shadow-gold-glow">
+                            <i data-lucide="trending-up" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-[9px] font-extrabold uppercase tracking-wider text-cyber-gold block">APMC DVG</span>
+                            <h4 id="btn-mandi-title" class="font-black text-white text-sm mt-0.5">ದಾವಣಗೆರೆ ದರ</h4>
+                            <p id="btn-mandi-desc" class="text-[10px] text-slate-400 mt-0.5 leading-tight">ಮೆಕ್ಕೆಜೋಳ & ಅಡಿಕೆ ರೇಟ್</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bento Tile: Davangere APMC Live Rates Box -->
+            <div class="bg-gradient-to-br from-cyber-card to-cyber-surface rounded-3xl p-4 border border-cyber-border shadow-cyber-card">
+                <div class="flex items-center justify-between mb-2.5 pb-2 border-b border-cyber-border">
+                    <span id="lbl-live-mandi" class="text-xs font-black text-slate-200 flex items-center space-x-2">
+                        <i data-lucide="store" class="w-4 h-4 text-cyber-gold"></i>
+                        <span>ದಾವಣಗೆರೆ APMC ಪ್ರಮುಖ ದರಗಳು (ಕ್ವಿಂಟಾಲ್)</span>
+                    </span>
+                    <button onclick="switchTab('mandi')" id="btn-view-all-mandi" class="text-[11px] font-bold text-cyber-neon hover:underline">
+                        View All →
+                    </button>
+                </div>
+
+                <div class="space-y-2">
+                    <!-- Maize / ಮೆಕ್ಕೆಜೋಳ -->
+                    <div class="flex items-center justify-between py-2 border-b border-white/5 text-xs">
+                        <div class="flex items-center space-x-2.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-cyber-gold shadow-[0_0_8px_#fbbf24]"></span>
+                            <div>
+                                <span class="font-black text-white block" id="mandi-item-1">ಮೆಕ್ಕೆಜೋಳ (Maize - DVG)</span>
+                                <span class="text-[10px] text-slate-400">ದಾವಣಗೆರೆ APMC ಯಾರ್ಡ್</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-black text-white text-sm">₹2,420</span>
+                            <span class="text-[10px] text-cyber-neon font-black ml-1 block">▲ +₹35</span>
+                        </div>
+                    </div>
+
+                    <!-- Arecanut / ಅಡಿಕೆ -->
+                    <div class="flex items-center justify-between py-2 border-b border-white/5 text-xs">
+                        <div class="flex items-center space-x-2.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-cyber-neon shadow-[0_0_8px_#00f59b]"></span>
+                            <div>
+                                <span class="font-black text-white block" id="mandi-item-2">ಅಡಿಕೆ (Arecanut ರಾಶಿ)</span>
+                                <span class="text-[10px] text-slate-400">ಚನ್ನಗಿರಿ ಎಪಿಎಂಸಿ</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-black text-white text-sm">₹51,800</span>
+                            <span class="text-[10px] text-cyber-neon font-black ml-1 block">▲ +₹450</span>
+                        </div>
+                    </div>
+
+                    <!-- Cotton / ಹತ್ತಿ -->
+                    <div class="flex items-center justify-between py-2 text-xs">
+                        <div class="flex items-center space-x-2.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-cyber-cyan shadow-[0_0_8px_#38bdf8]"></span>
+                            <div>
+                                <span class="font-black text-white block" id="mandi-item-3">ಹತ್ತಿ (Cotton DCH-32)</span>
+                                <span class="text-[10px] text-slate-400">ಹರಿಹರ / ದಾವಣಗೆರೆ</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-black text-white text-sm">₹7,650</span>
+                            <span class="text-[10px] text-cyber-rose font-black ml-1 block">▼ -₹30</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bento Tile: Davangere KVK Emergency Helpline -->
+            <div class="relative overflow-hidden bg-gradient-to-r from-emerald-950 via-cyber-card to-slate-900 rounded-3xl p-4 border border-cyber-neon/40 shadow-neon-glow flex items-center justify-between">
+                <div class="space-y-0.5">
+                    <span id="lbl-helpline-tag" class="text-[9px] uppercase font-black text-cyber-neon tracking-widest">ದಾವಣಗೆರೆ ಕೃಷಿ ವಿಜ್ಞಾನ ಕೇಂದ್ರ (KVK)</span>
+                    <h4 id="lbl-helpline-title" class="font-black text-white text-sm">ರೈತರ ಸಹಾಯವಾಣಿ (24x7)</h4>
+                    <p id="lbl-helpline-desc" class="text-xs text-slate-300">ಟೋಲ್-ಫ್ರೀ ಸಂಖ್ಯೆ: 1551</p>
+                </div>
+                <a href="tel:1551" class="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-cyber-neon to-cyber-lime text-slate-950 font-black text-xs shadow-neon-glow active:scale-95 flex items-center space-x-1.5 transition">
+                    <i data-lucide="phone-call" class="w-4 h-4"></i>
+                    <span>1551 Call</span>
+                </a>
+            </div>
+
+        </section>
+
+        <!-- ================= TAB 2: CROP SELECTOR ================= -->
+        <section id="tab-crops" class="hidden space-y-4">
+            <div class="bg-cyber-card rounded-3xl p-5 border border-cyber-border shadow-cyber-card space-y-3.5">
+                <div class="flex items-center space-x-2.5 pb-3 border-b border-cyber-border">
+                    <div class="w-9 h-9 rounded-xl bg-cyber-neon/20 text-cyber-neon flex items-center justify-center font-bold">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h3 id="crop-filter-title" class="font-black text-white text-sm">ದಾವಣಗೆರೆ ಬೆಳೆ ಆಯ್ಕೆ ಎಂಜಿನ್</h3>
+                        <p id="crop-filter-desc" class="text-[11px] text-slate-400">ಮಣ್ಣು, ಭದ್ರಾ ನೀರಾವರಿ ಮತ್ತು ಋತುವಿನ ಪ್ರಕಾರ</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div>
+                        <label id="lbl-soil-select" class="block text-xs font-bold text-slate-300 mb-1">1. ಮಣ್ಣಿನ ಪ್ರಕಾರ (Soil Type)</label>
+                        <select id="sel-soil" onchange="calculateCropAdvice()" class="w-full bg-cyber-surface border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                        </select>
+                    </div>
+
+                    <div>
+                        <label id="lbl-season-select" class="block text-xs font-bold text-slate-300 mb-1">2. ಬಿತ್ತನೆ ಋತು (Season)</label>
+                        <select id="sel-season" onchange="calculateCropAdvice()" class="w-full bg-cyber-surface border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                        </select>
+                    </div>
+
+                    <div>
+                        <label id="lbl-water-select" class="block text-xs font-bold text-slate-300 mb-1">3. ನೀರಿನ ಲಭ್ಯತೆ (Water Availability)</label>
+                        <select id="sel-water" onchange="calculateCropAdvice()" class="w-full bg-cyber-surface border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                        </select>
+                    </div>
+
+                    <button onclick="calculateCropAdvice()" class="w-full mt-2 py-3 bg-gradient-to-r from-cyber-neon to-cyber-lime text-slate-950 font-black text-xs rounded-2xl shadow-neon-glow transition active:scale-95 flex items-center justify-center space-x-2">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        <span id="btn-find-crops">ಅತ್ಯುತ್ತಮ ಬೆಳೆಗಳನ್ನು ಹುಡುಕಿ (Find Crops)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recommendations Container -->
+            <div id="crop-results-container" class="space-y-3">
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: PLANT DOCTOR (CYBER SCANNER) ================= -->
+        <section id="tab-doctor" class="hidden space-y-4">
+            
+            <!-- Cyber Leaf Scanner Card -->
+            <div class="relative overflow-hidden bg-gradient-to-br from-cyber-card via-cyber-surface to-cyber-base text-white rounded-3xl p-5 border border-cyber-rose/40 shadow-cyber-card">
+                
+                <div class="flex items-center justify-between mb-3.5">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-cyber-rose/20 text-cyber-rose flex items-center justify-center border border-cyber-rose/30">
+                            <i data-lucide="scan-line" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 id="lbl-scanner-title" class="font-black text-xs text-white">AI ಸಸ್ಯ ರೋಗ ಸ್ಕ್ಯಾನರ್</h3>
+                            <p id="lbl-scanner-desc" class="text-[10px] text-slate-400">ಕ್ಯಾಮರಾ ಮೂಲಕ ಎಲೆಯ ಫೋಟೋ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-wider bg-cyber-rose/20 text-cyber-rose border border-cyber-rose/40 px-2.5 py-0.5 rounded-full">
+                        AI Vision
+                    </span>
+                </div>
+
+                <!-- Hidden Native Camera Input -->
+                <input id="camera-file-input" type="file" accept="image/*" capture="environment" class="hidden" onchange="handleImageUpload(event)">
+
+                <!-- Scanner Viewport with Corner Crosshairs -->
+                <div id="scanner-box" onclick="triggerCameraInput()" class="h-44 rounded-2xl border-2 border-dashed border-cyber-neon/50 bg-black/60 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden group cursor-pointer hover:border-cyber-neon transition">
+                    
+                    <!-- Crosshairs -->
+                    <div class="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-cyber-neon"></div>
+                    <div class="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-cyber-neon"></div>
+                    <div class="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-cyber-neon"></div>
+                    <div class="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-cyber-neon"></div>
+
+                    <!-- Glowing Laser Beam -->
+                    <div id="scanner-laser" class="hidden absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyber-neon to-transparent shadow-[0_0_20px_#00f59b] z-20 animate-scan-laser-genz"></div>
+
+                    <!-- Idle Screen -->
+                    <div id="scanner-idle" class="flex flex-col items-center z-10 space-y-2">
+                        <div class="w-14 h-14 rounded-2xl bg-cyber-neon/20 border border-cyber-neon/40 flex items-center justify-center text-cyber-neon shadow-neon-glow group-hover:scale-110 transition">
+                            <i data-lucide="camera" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <span id="lbl-scan-prompt" class="text-xs font-black text-white block">ಕ್ಯಾಮರಾ ಮೂಲಕ ಫೋಟೋ ತೆಗೆಯಿರಿ</span>
+                            <span id="lbl-scan-sub" class="text-[10px] text-slate-400 block mt-0.5">(ಟ್ಯಾಪ್ ಮಾಡಿ - AI ತಕ್ಷಣ ರೋಗ ಮತ್ತು ಔಷಧ ತಿಳಿಸುತ್ತದೆ)</span>
+                        </div>
+                    </div>
+
+                    <!-- Active Scanning Status -->
+                    <div id="scanner-active" class="hidden flex flex-col items-center z-10 space-y-2">
+                        <div class="w-10 h-10 border-4 border-cyber-neon border-t-transparent rounded-full animate-spin"></div>
+                        <span id="lbl-scanning-active" class="text-xs font-black text-cyber-neon tracking-wide">AI ಎಲೆ ವಿಶ್ಲೇಷಣೆ ನಡೆಯುತ್ತಿದೆ...</span>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <img id="scanned-image-preview" class="hidden absolute inset-0 w-full h-full object-cover opacity-60 z-0" alt="Scanned leaf">
+                </div>
+            </div>
+
+            <!-- Manual Disease Checker -->
+            <div class="bg-cyber-card rounded-3xl p-5 border border-cyber-border shadow-cyber-card space-y-3.5">
+                <h3 id="symptom-title" class="font-black text-white text-sm flex items-center space-x-2">
+                    <i data-lucide="clipboard-check" class="w-4 h-4 text-cyber-neon"></i>
+                    <span>ದಾವಣಗೆರೆ ಪ್ರಮುಖ ಬೆಳೆಗಳ ರೋಗಲಕ್ಷಣ ತಪಾಸಣೆ</span>
+                </h3>
+
+                <div class="space-y-3">
+                    <div>
+                        <label id="lbl-doc-crop" class="block text-xs font-bold text-slate-300 mb-1">ಬೆಳೆಯ ಪ್ರಕಾರ (Select Crop)</label>
+                        <select id="doc-crop" class="w-full bg-cyber-surface border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                        </select>
+                    </div>
+
+                    <div>
+                        <label id="lbl-doc-symptom" class="block text-xs font-bold text-slate-300 mb-1">ಬೆಳೆಯಲ್ಲಿ ಕಂಡುಬರುವ ಲಕ್ಷಣಗಳೇನು?</label>
+                        <select id="doc-symptom" class="w-full bg-cyber-surface border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                        </select>
+                    </div>
+
+                    <button onclick="diagnoseDisease()" class="w-full py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-black text-xs rounded-2xl shadow-[0_0_20px_rgba(244,63,94,0.35)] transition active:scale-95 flex items-center justify-center space-x-2">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                        <span id="btn-diagnose">ರೋಗ ಗುರುತಿಸಿ ಮತ್ತು ನಿಖರ ಔಷಧ ನೋಡಿ</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Diagnosis Result Card -->
+            <div id="disease-diagnosis-card" class="hidden">
+            </div>
+
+        </section>
+
+        <!-- ================= TAB 4: IRRIGATION & NPK ================= -->
+        <section id="tab-irrigation" class="hidden space-y-4">
+            
+            <!-- Irrigation Card -->
+            <div class="bg-cyber-card rounded-3xl p-5 border border-cyber-border shadow-cyber-card space-y-3.5">
+                <div class="flex items-center space-x-2.5 pb-3 border-b border-cyber-border">
+                    <div class="w-9 h-9 rounded-xl bg-cyber-cyan/20 text-cyber-cyan flex items-center justify-center">
+                        <i data-lucide="waves" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h3 id="irrig-card-title" class="font-black text-white text-sm">ದಾವಣಗೆರೆ ಭದ್ರಾ ನೀರಾವರಿ ನಿರ್ವಹಣೆ</h3>
+                        <p id="irrig-card-desc" class="text-[11px] text-slate-400">ಕಾಲುವೆ ನೀರು, ಕೊಳವೆಬಾವಿ ಹಾಗೂ ಮಣ್ಣಿನ ತೇವಾಂಶ</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div>
+                        <label id="lbl-moisture-status" class="block text-xs font-bold text-slate-300 mb-1">ಪ್ರಸ್ತುತ ಮಣ್ಣಿನ ತೇವಾಂಶ (Moisture Status)</label>
+                        <select id="irrig-moisture" class="w-full bg-cyber-surface border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                        </select>
+                    </div>
+
+                    <div>
+                        <label id="lbl-growth-stage" class="block text-xs font-bold text-slate-300 mb-1">ಬೆಳೆಯ ಬೆಳವಣಿಗೆಯ ಹಂತ (Growth Stage)</label>
+                        <select id="irrig-stage" class="w-full bg-cyber-surface border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                        </select>
+                    </div>
+
+                    <button onclick="calculateIrrigation()" class="w-full py-3 bg-gradient-to-r from-cyber-cyan to-blue-500 text-slate-950 font-black text-xs rounded-2xl shadow-[0_0_20px_rgba(56,189,248,0.35)] transition active:scale-95 flex items-center justify-center space-x-2">
+                        <i data-lucide="droplet" class="w-4 h-4"></i>
+                        <span id="btn-irrig-calc">ನೀರಾವರಿ ಸಲಹೆ ಪಡೆಯಿರಿ (Get Advice)</span>
+                    </button>
+                </div>
+
+                <div id="irrig-advice-output" class="mt-3 hidden p-3.5 rounded-2xl bg-cyan-950/60 border border-cyan-500/30 text-xs text-cyan-200">
+                </div>
+            </div>
+
+            <!-- NPK Fertilizer Calculator -->
+            <div class="bg-cyber-card rounded-3xl p-5 border border-cyber-border shadow-cyber-card space-y-3.5">
+                <div class="flex items-center space-x-2.5 pb-3 border-b border-cyber-border">
+                    <div class="w-9 h-9 rounded-xl bg-cyber-neon/20 text-cyber-neon flex items-center justify-center">
+                        <i data-lucide="calculator" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h3 id="npk-title" class="font-black text-white text-sm">ರಸಗೊಬ್ಬರ ಕ್ಯಾಲ್ಕುಲೇಟರ್ (NPK)</h3>
+                        <p id="npk-desc" class="text-[11px] text-slate-400">ಯೂರಿಯಾ, ಡಿಎಪಿ ಮತ್ತು ಪೊಟ್ಯಾಶ್ ನಿಖರ ಪ್ರಮಾಣ</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label id="lbl-npk-area" class="block text-xs font-bold text-slate-300 mb-1">ವಿಸ್ತೀರ್ಣ (Area)</label>
+                        <input id="npk-area" type="number" value="1" min="0.5" step="0.5" class="w-full bg-cyber-surface border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon font-black">
+                    </div>
+                    <div>
+                        <label id="lbl-npk-unit" class="block text-xs font-bold text-slate-300 mb-1">ಪ್ರಮಾಣ (Unit)</label>
+                        <select id="npk-unit" class="w-full bg-cyber-surface border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                            <option value="acre">ಎಕರೆ (Acre)</option>
+                            <option value="guntha">ಗುಂಟೆ (Guntha)</option>
+                            <option value="hectare">ಹೆಕ್ಟೇರ್ (Hectare)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label id="lbl-npk-crop" class="block text-xs font-bold text-slate-300 mb-1">ಬೆಳೆ ಆಯ್ಕೆಮಾಡಿ</label>
+                    <select id="npk-crop" class="w-full bg-cyber-surface border border-cyber-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                    </select>
+                </div>
+
+                <button onclick="calculateNPK()" class="w-full mt-1 py-3 bg-gradient-to-r from-cyber-neon to-cyber-lime text-slate-950 font-black text-xs rounded-2xl shadow-neon-glow transition active:scale-95 flex items-center justify-center space-x-2">
+                    <i data-lucide="scale" class="w-4 h-4"></i>
+                    <span id="btn-npk-calc">ಗೊಬ್ಬರದ ಚೀಲಗಳನ್ನು ಲೆಕ್ಕಹಾಕಿ</span>
+                </button>
+
+                <div id="npk-result" class="mt-3 hidden grid grid-cols-3 gap-2 text-center">
+                    <div class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-2.5">
+                        <span class="text-[10px] text-amber-300 font-bold block">Urea (ಯೂರಿಯಾ)</span>
+                        <span id="npk-urea" class="text-sm font-black text-amber-400 mt-0.5 block">2.5 ಚೀಲ</span>
+                    </div>
+                    <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-2.5">
+                        <span class="text-[10px] text-emerald-300 font-bold block">DAP (ಡಿಎಪಿ)</span>
+                        <span id="npk-dap" class="text-sm font-black text-emerald-400 mt-0.5 block">1 ಚೀಲ</span>
+                    </div>
+                    <div class="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-2.5">
+                        <span class="text-[10px] text-blue-300 font-bold block">MOP (ಪೊಟ್ಯಾಶ್)</span>
+                        <span id="npk-mop" class="text-sm font-black text-blue-400 mt-0.5 block">0.5 ಚೀಲ</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= TAB 5: MANDI & WEATHER ================= -->
+        <section id="tab-mandi" class="hidden space-y-4">
+            
+            <div class="bg-cyber-card rounded-3xl p-5 border border-cyber-border shadow-cyber-card space-y-3.5">
+                <div class="flex items-center justify-between pb-3 border-b border-cyber-border">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-cyber-gold/20 text-cyber-gold flex items-center justify-center font-bold">
+                            <i data-lucide="store" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h3 id="mandi-header-title" class="font-black text-white text-sm">ದಾವಣಗೆರೆ APMC ಮಾರುಕಟ್ಟೆ ದರಗಳು</h3>
+                            <p id="mandi-header-desc" class="text-[11px] text-slate-400">ದಾವಣಗೆರೆ, ಚನ್ನಗಿರಿ, ಹರಿಹರ ಎಪಿಎಂಸಿ ದರಗಳು</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] bg-cyber-gold/20 text-cyber-gold border border-cyber-gold/40 font-black px-2 py-0.5 rounded-full">Live APMC</span>
+                </div>
+
+                <div class="relative">
+                    <input id="mandi-search-input" onkeyup="filterMandiTable()" type="text" placeholder="ಬೆಳೆ ಹುಡುಕಿ (ಉದಾ: ಮೆಕ್ಕೆಜೋಳ, ಅಡಿಕೆ, ಹತ್ತಿ, ಭತ್ತ)..." class="w-full bg-cyber-surface border border-cyber-border rounded-xl pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-cyber-neon">
+                    <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                </div>
+
+                <div class="overflow-x-auto no-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-cyber-border text-slate-400 text-[10px] uppercase font-bold">
+                                <th class="py-2.5 px-2" id="th-crop">ಬೆಳೆ (Crop)</th>
+                                <th class="py-2.5 px-2" id="th-mandi">ಮಾರುಕಟ್ಟೆ</th>
+                                <th class="py-2.5 px-2 text-right" id="th-modal">ಮಾದರಿ ದರ</th>
+                                <th class="py-2.5 px-2 text-right" id="th-trend">ಟ್ರೆಂಡ್</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mandi-table-body" class="divide-y divide-cyber-border/60 font-medium text-slate-300">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Weather Details & 5-Day Forecast -->
+            <div class="bg-cyber-card rounded-3xl p-5 border border-cyber-border shadow-cyber-card space-y-3">
+                <h3 id="weather-prec-title" class="font-black text-white text-sm flex items-center space-x-2">
+                    <i data-lucide="cloud-sun" class="w-4 h-4 text-amber-400"></i>
+                    <span>ದಾವಣಗೆರೆ 5 ದಿನಗಳ ಹವಾಮಾನ ಮುನ್ಸೂಚನೆ & ಸಲಹೆ</span>
+                </h3>
+
+                <!-- 5 Day Mini Forecast Cards -->
+                <div class="grid grid-cols-5 gap-1.5 text-center py-1">
+                    <div class="bg-black/40 p-2 rounded-2xl border border-white/5">
+                        <span class="text-[9px] text-slate-400 block font-bold">ಇಂದು</span>
+                        <span class="text-base my-0.5 block">☀️</span>
+                        <span class="text-[10px] font-black text-white block">31°C</span>
+                    </div>
+                    <div class="bg-black/40 p-2 rounded-2xl border border-white/5">
+                        <span class="text-[9px] text-slate-400 block font-bold">ನಾಳೆ</span>
+                        <span class="text-base my-0.5 block">⛅</span>
+                        <span class="text-[10px] font-black text-white block">32°C</span>
+                    </div>
+                    <div class="bg-black/40 p-2 rounded-2xl border border-white/5">
+                        <span class="text-[9px] text-slate-400 block font-bold">ಬುಧ</span>
+                        <span class="text-base my-0.5 block">☀️</span>
+                        <span class="text-[10px] font-black text-white block">31°C</span>
+                    </div>
+                    <div class="bg-black/40 p-2 rounded-2xl border border-white/5">
+                        <span class="text-[9px] text-slate-400 block font-bold">ಗುರು</span>
+                        <span class="text-base my-0.5 block">🌤️</span>
+                        <span class="text-[10px] font-black text-white block">30°C</span>
+                    </div>
+                    <div class="bg-black/40 p-2 rounded-2xl border border-white/5">
+                        <span class="text-[9px] text-slate-400 block font-bold">ಶುಕ್ರ</span>
+                        <span class="text-base my-0.5 block">🌧️</span>
+                        <span class="text-[10px] font-black text-white block">29°C</span>
+                    </div>
+                </div>
+
+                <div class="space-y-2 text-xs" id="weather-precautions-box">
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= TAB 6: GOVT SCHEMES & ABOUT ================= -->
+        <section id="tab-schemes" class="hidden space-y-4">
+            
+            <div class="bg-cyber-card rounded-3xl p-5 border border-cyber-border shadow-cyber-card space-y-3">
+                <div class="flex items-center space-x-2.5 pb-2 border-b border-cyber-border">
+                    <div class="w-9 h-9 rounded-xl bg-cyber-neon/20 text-cyber-neon flex items-center justify-center font-bold">
+                        <i data-lucide="award" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h3 id="schemes-header-title" class="font-black text-white text-sm">ಪ್ರಮುಖ ರೈತ ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು</h3>
+                        <p id="schemes-header-desc" class="text-[11px] text-slate-400">ಕರ್ನಾಟಕ ರೈತ ಸಿರಿ & ಕೇಂದ್ರ ಕೃಷಿ ಪೋರ್ಟಲ್</p>
+                    </div>
+                </div>
+
+                <div class="space-y-2.5" id="schemes-container">
+                </div>
+            </div>
+
+            <!-- About AgriBot Pro Gen-Z Edition -->
+            <div class="relative overflow-hidden bg-gradient-to-br from-cyber-card to-cyber-surface text-white rounded-3xl p-5 border border-cyber-border shadow-cyber-card">
+                <div class="flex items-center space-x-2 mb-2">
+                    <i data-lucide="info" class="w-4 h-4 text-cyber-neon"></i>
+                    <h4 class="font-black text-xs text-white">AgriBot Pro - Davangere Smart Agriculture</h4>
+                </div>
+                <p id="about-text" class="text-[11px] text-slate-400 leading-relaxed">
+                    AgriBot (ಅಗ್ರಿಬಾಟ್) is a smart agriculture assistant engineered for Davangere farmers (Maize, Arecanut, Paddy, Cotton) with cyber Gen-Z UI, trilingual voice guidance, offline PWA & Android APK compilation.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cyber-border flex justify-between items-center text-[10px] text-slate-400">
+                    <span>Version 4.0 (AgriBot DVG)</span>
+                    <span class="text-cyber-neon font-black">100% Verified</span>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ================= GEN-Z FLOATING DOCK NAVIGATION ================= -->
+    <div class="fixed bottom-3 left-0 right-0 max-w-[calc(100%-1.5rem)] sm:max-w-md mx-auto z-40 safe-bottom">
+        <nav class="bg-cyber-surface/90 backdrop-blur-2xl border border-cyber-neon/30 py-2.5 px-3 rounded-3xl flex justify-around items-center shadow-dock">
+            
+            <!-- Home -->
+            <button id="nav-home" onclick="switchTab('home')" class="nav-item flex flex-col items-center text-cyber-neon font-black transition-all duration-200 active:scale-90">
+                <i data-lucide="home" class="w-5 h-5 mb-0.5"></i>
+                <span class="text-[9px] uppercase tracking-wider" id="nav-lbl-home">ಮುಖಪುಟ</span>
+            </button>
+
+            <!-- Crops -->
+            <button id="nav-crops" onclick="switchTab('crops')" class="nav-item flex flex-col items-center text-slate-400 font-bold hover:text-cyber-neon transition-all duration-200 active:scale-90">
+                <i data-lucide="wheat" class="w-5 h-5 mb-0.5"></i>
+                <span class="text-[9px] uppercase tracking-wider" id="nav-lbl-crops">ಬೆಳೆಗಳು</span>
+            </button>
+
+            <!-- Doctor -->
+            <button id="nav-doctor" onclick="switchTab('doctor')" class="nav-item flex flex-col items-center text-slate-400 font-bold hover:text-cyber-rose transition-all duration-200 active:scale-90">
+                <div class="relative">
+                    <i data-lucide="scan-line" class="w-5 h-5 mb-0.5"></i>
+                    <span class="w-2 h-2 rounded-full bg-cyber-rose absolute -top-0.5 -right-0.5 shadow-[0_0_6px_#fb7185]"></span>
+                </div>
+                <span class="text-[9px] uppercase tracking-wider" id="nav-lbl-doctor">ವೈದ್ಯ</span>
+            </button>
+
+            <!-- Irrigation & Tools -->
+            <button id="nav-irrigation" onclick="switchTab('irrigation')" class="nav-item flex flex-col items-center text-slate-400 font-bold hover:text-cyber-cyan transition-all duration-200 active:scale-90">
+                <i data-lucide="droplets" class="w-5 h-5 mb-0.5"></i>
+                <span class="text-[9px] uppercase tracking-wider" id="nav-lbl-irrig">ನೀರಾವರಿ</span>
+            </button>
+
+            <!-- Mandi -->
+            <button id="nav-mandi" onclick="switchTab('mandi')" class="nav-item flex flex-col items-center text-slate-400 font-bold hover:text-cyber-gold transition-all duration-200 active:scale-90">
+                <i data-lucide="trending-up" class="w-5 h-5 mb-0.5"></i>
+                <span class="text-[9px] uppercase tracking-wider" id="nav-lbl-mandi">ಮಾರುಕಟ್ಟೆ</span>
+            </button>
+
+            <!-- Schemes -->
+            <button id="nav-schemes" onclick="switchTab('schemes')" class="nav-item flex flex-col items-center text-slate-400 font-bold hover:text-cyber-neon transition-all duration-200 active:scale-90">
+                <i data-lucide="shield-check" class="w-5 h-5 mb-0.5"></i>
+                <span class="text-[9px] uppercase tracking-wider" id="nav-lbl-schemes">ಯೋಜನೆಗಳು</span>
+            </button>
+
+        </nav>
+    </div>
+
+    <!-- Application Core Script -->
+    <script src="app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
