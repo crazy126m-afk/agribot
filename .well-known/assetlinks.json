@@ -1,0 +1,1 @@
+[{"relation": ["delegate_permission/common.handle_all_urls"], "target": {"namespace": "android_app", "package_name": "com.agribot.dvg", "sha256_cert_fingerprints": ["52:96:44:11:4E:09:94:40:48:94:AE:0E:08:99:15:7F:6D:26:6D:AA:9F:F8:30:CA:40:8E:B4:49:6C:9F:3B:56"]}}]
