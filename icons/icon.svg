@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15803d" />
+      <stop offset="100%" stop-color="#14532d" />
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80" />
+      <stop offset="100%" stop-color="#22c55e" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="100%" stop-color="#eab308" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded App Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  
+  <!-- Subtle circular sun halo -->
+  <circle cx="256" cy="180" r="100" fill="#facc15" opacity="0.15" />
+  
+  <!-- Golden Sun -->
+  <circle cx="256" cy="170" r="50" fill="url(#goldGrad)" opacity="0.9" />
+
+  <!-- Agricultural Plant / Sprout -->
+  <!-- Main Stem -->
+  <path d="M 256,410 C 256,310 256,230 256,210" stroke="#86efac" stroke-width="16" stroke-linecap="round" fill="none" />
+  
+  <!-- Left Leaf -->
+  <path d="M 256,330 C 200,320 140,260 150,190 C 200,190 245,260 256,330 Z" fill="url(#leafGrad)" />
+  
+  <!-- Right Leaf -->
+  <path d="M 256,280 C 310,270 370,220 360,150 C 310,150 268,210 256,280 Z" fill="url(#leafGrad)" />
+
+  <!-- Soil Base -->
+  <path d="M 160,420 Q 256,440 352,420 Q 320,450 256,450 Q 190,450 160,420 Z" fill="#ca8a04" opacity="0.8" />
+  
+  <!-- Small Technology / Robot nodes -->
+  <circle cx="256" cy="205" r="10" fill="#ffffff" />
+  <circle cx="150" cy="190" r="7" fill="#ffffff" />
+  <circle cx="360" cy="150" r="7" fill="#ffffff" />
+  <line x1="256" y1="205" x2="360" y2="150" stroke="#ffffff" stroke-width="3" stroke-dasharray="6,4" opacity="0.6" />
+  <line x1="256" y1="205" x2="150" y2="190" stroke="#ffffff" stroke-width="3" stroke-dasharray="6,4" opacity="0.6" />
+</svg>
