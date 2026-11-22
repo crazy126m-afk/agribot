@@ -1,0 +1,9 @@
+{
+  "appId": "com.agribot.app",
+  "appName": "AgriBot",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": true
+  }
+}
