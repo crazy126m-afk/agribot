@@ -6,7 +6,7 @@
     <title>AgriBot Pro - Davangere Smart Agriculture Suite | ಅಗ್ರಿಬಾಟ್</title>
     
     <!-- PWA & Mobile Meta Tags -->
-    <meta name="theme-color" content="#060907">
+    <meta name="theme-color" content="#0b1120">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,23 +32,23 @@
                     },
                     colors: {
                         cyber: {
-                            base: '#060a08',
-                            surface: '#0d1310',
-                            card: '#121b16',
-                            border: '#1b2c23',
-                            neon: '#00f59b',
-                            lime: '#a3e635',
-                            gold: '#fbbf24',
+                            base: '#0b1120',
+                            surface: '#111a2e',
+                            card: '#162238',
+                            border: '#22334e',
+                            neon: '#10b981',
+                            lime: '#34d399',
+                            gold: '#f59e0b',
                             cyan: '#38bdf8',
-                            rose: '#fb7185',
-                            accent: '#10b981'
+                            rose: '#f43f5e',
+                            accent: '#059669'
                         }
                     },
                     boxShadow: {
-                        'neon-glow': '0 0 25px -5px rgba(0, 245, 155, 0.35)',
-                        'gold-glow': '0 0 25px -5px rgba(251, 191, 36, 0.35)',
-                        'cyber-card': '0 12px 30px -10px rgba(0, 0, 0, 0.6)',
-                        'dock': '0 15px 40px -10px rgba(0, 245, 155, 0.25)'
+                        'neon-glow': '0 0 20px -3px rgba(16, 185, 129, 0.35)',
+                        'gold-glow': '0 0 20px -3px rgba(245, 158, 11, 0.35)',
+                        'cyber-card': '0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05)',
+                        'dock': '0 12px 35px -5px rgba(16, 185, 129, 0.25)'
                     }
                 }
             }
@@ -78,18 +78,18 @@
             padding-bottom: env(safe-area-inset-bottom, 24px);
         }
         @keyframes scanLaserGenZ {
-            0% { top: 0%; opacity: 0.8; box-shadow: 0 0 15px #00f59b; }
-            50% { top: 92%; opacity: 1; box-shadow: 0 0 25px #00f59b; }
-            100% { top: 0%; opacity: 0.8; box-shadow: 0 0 15px #00f59b; }
+            0% { top: 0%; opacity: 0.8; box-shadow: 0 0 15px #10b981; }
+            50% { top: 92%; opacity: 1; box-shadow: 0 0 25px #10b981; }
+            100% { top: 0%; opacity: 0.8; box-shadow: 0 0 15px #10b981; }
         }
         .animate-scan-laser-genz {
             animation: scanLaserGenZ 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
         .mesh-gradient-bg {
-            background: radial-gradient(circle at 10% 20%, rgba(0, 245, 155, 0.08) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(251, 191, 36, 0.06) 0%, transparent 40%),
-                        radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
-                        #060a08;
+            background: radial-gradient(circle at 0% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 45%),
+                        radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+                        radial-gradient(circle at 50% 25%, rgba(245, 158, 11, 0.06) 0%, transparent 40%),
+                        #0b1120;
         }
     </style>
 </head>
@@ -106,7 +106,7 @@
             <div class="flex items-center space-x-3">
                 <div class="relative group cursor-pointer" onclick="playBeep(800, 0.1)">
                     <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyber-card via-cyber-surface to-cyber-border p-0.5 border border-cyber-neon/40 shadow-neon-glow flex items-center justify-center transition group-hover:scale-105">
-                        <span class="text-2xl drop-shadow-[0_0_12px_#00f59b]">🌱</span>
+                        <span class="text-2xl drop-shadow-[0_0_12px_#10b981]">🌱</span>
                     </div>
                     <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-cyber-neon rounded-full border-2 border-cyber-base flex items-center justify-center animate-pulse"></span>
                 </div>
@@ -146,7 +146,7 @@
         <!-- Live Cyber Ticker Pill -->
         <div class="mt-2.5 bg-gradient-to-r from-cyber-surface via-cyber-card to-cyber-surface rounded-2xl px-3 py-2 flex items-center justify-between text-xs border border-cyber-border text-slate-300 shadow-inner">
             <div class="flex items-center space-x-2 truncate">
-                <span class="w-2 h-2 rounded-full bg-cyber-neon shadow-[0_0_8px_#00f59b] animate-ping"></span>
+                <span class="w-2 h-2 rounded-full bg-cyber-neon shadow-[0_0_8px_#10b981] animate-ping"></span>
                 <span id="advisory-ticker" class="truncate font-semibold text-[11px] text-slate-200">
                     ದಾವಣಗೆರೆ ಹವಾಮಾನ: ವಾತಾವರಣ ಸ್ಪಷ್ಟವಾಗಿದೆ, ನೀರಾವರಿ ಮಾಡಬಹುದು.
                 </span>
@@ -443,7 +443,7 @@
                     <!-- Arecanut / ಅಡಿಕೆ -->
                     <div class="flex items-center justify-between py-2 border-b border-white/5 text-xs">
                         <div class="flex items-center space-x-2.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-cyber-neon shadow-[0_0_8px_#00f59b]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-cyber-neon shadow-[0_0_8px_#10b981]"></span>
                             <div>
                                 <span class="font-black text-white block" id="mandi-item-2">ಅಡಿಕೆ (Arecanut ರಾಶಿ)</span>
                                 <span class="text-[10px] text-slate-400">ಚನ್ನಗಿರಿ ಎಪಿಎಂಸಿ</span>
@@ -565,7 +565,7 @@
                     <div class="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-cyber-neon"></div>
 
                     <!-- Glowing Laser Beam -->
-                    <div id="scanner-laser" class="hidden absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyber-neon to-transparent shadow-[0_0_20px_#00f59b] z-20 animate-scan-laser-genz"></div>
+                    <div id="scanner-laser" class="hidden absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyber-neon to-transparent shadow-[0_0_20px_#10b981] z-20 animate-scan-laser-genz"></div>
 
                     <!-- Idle Screen -->
                     <div id="scanner-idle" class="flex flex-col items-center z-10 space-y-2">
